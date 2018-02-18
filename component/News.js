@@ -1,65 +1,3 @@
-// /**
-//  * Sample React Native App
-//  * https://github.com/facebook/react-native
-//  * @flow
-//  */
-//
-// import React, { Component } from 'react';
-// import {
-//   Platform,
-//   StyleSheet,
-//   Text,
-//   View,
-//   ScrollView,
-//   TouchableOpacity,
-//
-// } from 'react-native';
-//
-// import ScrollableTabView, { DefaultTabBar, } from 'react-native-scrollable-tab-view';
-//
-// var screenWidth = require("Dimensions").get("window").width
-//
-// var scrollViewData_en = ["zhxw", "tpxw", "rcpy", "jxky", "whhd", "xyrw", "jlhz", "shfw", "mtgz"];
-// var scrollViewData_cn = ["综合新闻", "图片新闻", "人才培养", "教学科研", "文化活动", "校园人物", "交流合作", "社会服务", "媒体关注"];
-//
-// type Props = {};
-// export default class News extends Component<Props> {
-//   render() {
-//     return (
-//       <ScrollableTabView
-//         renderTabBar={() => <DefaultTabBar/>}>
-//         <View tabLabel="测试"></View>
-//         <View tabLabel="测试"></View>
-//         <View tabLabel="测试"></View>
-//       </ScrollableTabView>
-//     );
-//   }
-//
-//   renderScrollTabView() {
-//     var childViews = [];
-//     for (var i = 0; i < scrollViewData_cn.length; i++) {
-//       childViews.push(
-//         <View key={i} style={{height: 50}}>
-//           <Text style={{width: 30, height: 50}}>2333</Text>
-//         </View>
-//       )
-//     }
-//     return childViews;
-//   }
-//
-// }
-//
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#e8e8e8",
-//   },
-//
-// });
-//
-// module.exports = News;
-
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -69,37 +7,41 @@ import {
   ProgressViewIOS
 } from 'react-native';
 
+import ScrollableTabView, { DefaultTabBar, ScrollableTabBar} from 'react-native-scrollable-tab-view';
 
-import ScrollableTabView, { DefaultTabBar, } from 'react-native-scrollable-tab-view';
+var NewsListView = require("../component/News/NewsListView")
+
+var scrollViewData_en = ["zhxw", "tpxw", "rcpy", "jxky", "whhd", "xyrw", "jlhz", "shfw", "mtgz"];
+var scrollViewData_cn = ["综合新闻", "图片新闻", "人才培养", "教学科研", "文化活动", "校园人物", "交流合作", "社会服务", "媒体关注"];
+
 class TabBarView extends Component {
   render() {
     return (
-      <ScrollableTabView tabBarUnderlineColor="rgb(23,102,171)" tabBarActiveTextColor="black"  style={{marginTop:64}}>
-        <View tabLabel='测试1'>
-          <Text style={styles.phoneContainer}>
-            城市工资排行
-          </Text>
+      <ScrollableTabView tabBarActiveTextColor="black"
+                         tabBarUnderlineStyle={{backgroundColor:"black"}}
+                         tabBarInactiveTextColor="rgb(120, 120, 120)"
+                         tabBarTextStyle={{fontSize: 15, fontWeight:"bold"}}
+                         style={{marginTop:64}}
+                         renderTabBar={() => <ScrollableTabBar/>}
+      >
 
-        </View>
-
-        <View tabLabel='测试1'>
-          <Text style={styles.phoneContainer}>
-            行业工资排行
-          </Text>
-
-        </View>
-
-        <View tabLabel='测试1'>
-          <Text style={styles.phoneContainer}>
-            职业工资排行
-          </Text>
-
-        </View>
+        {this.renderChildTabView()}
 
       </ScrollableTabView>
 
     );
   }
+
+  renderChildTabView() {
+    var childTabViews = []
+    for (var i = 0; i < scrollViewData_cn.length; i++) {
+      childTabViews.push(
+        <NewsListView key={i} tabLabel={scrollViewData_cn[i]} />
+      )
+    }
+    return childTabViews;
+  }
+
 }
 
 const styles = StyleSheet.create({
@@ -140,7 +82,12 @@ const styles = StyleSheet.create({
       height: 3,
       width: 3
     }
+  },
+
+  scrollTabViewStyle: {
+
   }
+
 });
 
 // AppRegistry.registerComponent('TabBarView', () => TabBarView);
