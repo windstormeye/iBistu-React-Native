@@ -14,8 +14,8 @@ import {
   NavigatorIOS,
 } from 'react-native';
 
-var News = require("../component/News")
-var YellowPage = require("../component/YellowPage")
+var News = require("../component/News/News")
+var YellowPage = require("../component/YellowPage/YellowPage")
 var Map = require("../component/Map")
 var LostAndFound = require("../component/LostAndFound")
 var Mine = require("../component/Mine")
@@ -64,6 +64,7 @@ export default class Main extends Component<Props> {
 
           <NavigatorIOS
             style={{flex: 1}}
+            tintColor="black"
             initialRoute={
               {
                 component: YellowPage,
@@ -83,6 +84,7 @@ export default class Main extends Component<Props> {
 
           <NavigatorIOS
             style={{flex: 1}}
+            tintColor="black"
             initialRoute={
               {
                 component: LostAndFound,
@@ -102,6 +104,7 @@ export default class Main extends Component<Props> {
 
           <NavigatorIOS
             style={{flex: 1}}
+            tintColor="black"
             initialRoute={
               {
                 component: Map,
@@ -121,6 +124,7 @@ export default class Main extends Component<Props> {
 
           <NavigatorIOS
             style={{flex: 1}}
+            tintColor="black"
             initialRoute={
               {
                 component: Mine,
