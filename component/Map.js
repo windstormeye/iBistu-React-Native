@@ -1,35 +1,42 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
-  Platform,
+  AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  MapView,
 } from 'react-native';
 
 type Props = {};
-export default class News extends Component<Props> {
+export default class Map extends Component<Props> {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={{fontSize: 25}}>地图</Text>
-      </View>
+      <MapView
+        style={styles.map}
+        onRegionChangeComplete={()=>{}}
+        region={{
+          latitude: 40.027737,
+          longitude:116.403694,
+          latitudeDelta: 1,
+          longitudeDelta: 0.5,
+        }}
+        annotations={[{
+          longitude: 116.403694,
+          latitude: 40.027737,
+          title: 'I am Here!',
+        }]}
+      />
     );
   }
 }
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#e8e8e8",
-    alignItems: "center",
-    justifyContent: "center",
+  map: {
+    marginTop:64,
+    height: 350,
+    margin: 10,
+    borderWidth: 1,
+    borderColor: '#000000',
   }
 });
 
-module.exports = News;
+module.exports = Map;

@@ -10,16 +10,12 @@ import {
   StyleSheet,
   Text,
   View,
-  ListView
+  ListView,
+  Image,
 } from 'react-native';
 
 type Props = {};
 export default class NewsListView extends Component<Props> {
-
-  static props = {
-    title: '',
-    data: ''
-  }
 
   constructor(props) {
     super(props)
@@ -32,10 +28,22 @@ export default class NewsListView extends Component<Props> {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={{fontSize: 28}}>{this.props.title}</Text>
-      </View>
+      <ListView
+        dataSource={this.state.listViewDataSource}
+        renderRow={this.renderRow}
+      />
     );
+  }
+
+  renderRow(rowData) {
+    console.log(rowData.newsImage)
+    return (
+      <View>
+        <Text>{rowData.newsTitle}</Text>
+        <Image
+          source={{uri: 'http://facebook.github.io/react/img/logo_og.png', width: 50, height: 50}} />
+      </View>
+    )
   }
 
   componentDidMount() {
@@ -43,14 +51,16 @@ export default class NewsListView extends Component<Props> {
   }
 
   loadDataFromHttp() {
-    // fetch("https://api.iflab.org/api/v2/ibistu/_table/module_yellowpage?filter=isDisplay%3D1&offset=1&group=department&api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2&session_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzYTE4OWM0NDZhOWNlMzQ0M2NjMDQ1YmQyZTM4ZDA4YyIsImlzcyI6Imh0dHBzOi8vYXBpLmlmbGFiLm9yZy9hcGkvdjIvdXNlci9zZXNzaW9uIiwiaWF0IjoxNTE5MDA5MDY3LCJleHAiOjE1MTkwOTU0NjcsIm5iZiI6MTUxOTAwOTA2NywianRpIjoiZDlEblpoUDNHUDFtZVhlZCIsInVzZXJfaWQiOjQyLCJmb3JldmVyIjpmYWxzZX0.XL9MLkjot457yOCHabEq5eHfaowsePzta8e_Ta_yQkM")
-    //   .then((response) => response.json())
-    //   .then((responseData => {
-    //     console.log(responseData)
-    //   }))
-    //   .catch((error) => {
-    //     console.log(error)
-    //   })
+    fetch("https://api.iflab.org/api/v2/newsapi/newslist?category=zhxw&page=0&api_key=3528bd808dde403b83b456e986ce1632d513f7a06c19f5a582058be87be0d8c2&session_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzYTE4OWM0NDZhOWNlMzQ0M2NjMDQ1YmQyZTM4ZDA4YyIsImlzcyI6Imh0dHBzOi8vYXBpLmlmbGFiLm9yZy9hcGkvdjIvdXNlci9zZXNzaW9uIiwiaWF0IjoxNTE5MTQxMzM2LCJleHAiOjE1MTkyMjc3MzYsIm5iZiI6MTUxOTE0MTMzNiwianRpIjoid2M1cmFxenlsOHpGZDFYcCIsInVzZXJfaWQiOjQyLCJmb3JldmVyIjpmYWxzZX0.VZ3qbkxKUHS3gIbF9xqE_xiMQJOQXqmPl_u7TXrmzxo")
+      .then((response) => response.json())
+      .then((responseData => {
+        this.setState({
+          listViewDataSource: this.state.listViewDataSource.cloneWithRows(responseData)
+        })
+      }))
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
 }

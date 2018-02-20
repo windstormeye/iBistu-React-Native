@@ -124,7 +124,6 @@ export default class Main extends Component<Props> {
 
           <NavigatorIOS
             style={{flex: 1}}
-            tintColor="black"
             initialRoute={
               {
                 component: Mine,
