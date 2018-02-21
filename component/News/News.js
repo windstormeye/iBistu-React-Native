@@ -13,6 +13,7 @@ var NewsListView = require("../News/NewsListView")
 
 var scrollViewData_en = ["zhxw", "tpxw", "rcpy", "jxky", "whhd", "xyrw", "jlhz", "shfw", "mtgz"];
 var scrollViewData_cn = ["综合新闻", "图片新闻", "人才培养", "教学科研", "文化活动", "校园人物", "交流合作", "社会服务", "媒体关注"];
+var screeHeight = require("Dimensions").get("window").height
 
 class News extends Component {
 
@@ -41,6 +42,7 @@ class News extends Component {
         <NewsListView key={i}
                       tabLabel={scrollViewData_cn[i]}
                       title={scrollViewData_en[i]}
+                      style={{height: screeHeight - 200}}
         />
       )
     }

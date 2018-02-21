@@ -14,6 +14,9 @@ import {
   Image,
 } from 'react-native';
 
+var screeWidth = require("Dimensions").get("window").width
+var screeHeight = require("Dimensions").get("window").height
+
 type Props = {};
 export default class NewsListView extends Component<Props> {
 
@@ -29,6 +32,7 @@ export default class NewsListView extends Component<Props> {
   render() {
     return (
       <ListView
+        style={{height: screeHeight - 64,}}
         dataSource={this.state.listViewDataSource}
         renderRow={this.renderRow}
       />
@@ -36,14 +40,23 @@ export default class NewsListView extends Component<Props> {
   }
 
   renderRow(rowData) {
-    console.log(rowData.newsImage)
-    return (
-      <View>
-        <Text>{rowData.newsTitle}</Text>
-        <Image
-          source={{uri: 'http://facebook.github.io/react/img/logo_og.png', width: 50, height: 50}} />
-      </View>
-    )
+    console.log(rowData)
+    if (rowData.newsImage === "") {
+      return (
+        <View style={styles.listViewCellStyle}>
+          <Text style={styles.listViewCellTextStyle}>{rowData.newsTitle}</Text>
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.listViewCellStyle}>
+          <Text style={styles.listViewCellTextStyle}>{rowData.newsTitle}</Text>
+          <Image
+            source={{uri: rowData.newsImage, width: screeWidth, height: 150}} />
+          <Text style={styles.listViewCellIntroTextStyle}>{rowData.newsIntro}</Text>
+        </View>
+      )
+    }
   }
 
   componentDidMount() {
@@ -62,16 +75,26 @@ export default class NewsListView extends Component<Props> {
         console.log(error)
       })
   }
-
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#e8e8e8",
-    alignItems: "center",
-    justifyContent: "center",
-  }
+  listViewCellStyle: {
+    borderBottomColor: "#e8e8e8",
+    borderBottomWidth: 10,
+  },
+
+  listViewCellTextStyle: {
+    padding: 10,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+
+  listViewCellIntroTextStyle: {
+    padding: 10,
+    color: "rgb(100, 100, 100)",
+    fontSize: 15,
+    fontWeight: "bold",
+  },
 });
 
 module.exports = NewsListView;
